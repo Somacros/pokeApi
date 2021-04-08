@@ -1,16 +1,15 @@
 const express = require('express');
 const cors = require('cors');
-const { dbConnection } = require('../db/config');
 
 class Server {
 
     constructor(){
         this.app = express();
         this.port = process.env.PORT;
-        this.usuariosPath = '/api/users';
+        this.pokemonsPath = '/api';
 
         //Conectar a Base de datos Mongo
-        this.conectarDB();
+        //this.conectarDB();
 
         //Middlewares
         this.middleWares();
@@ -38,7 +37,7 @@ class Server {
 
     routes(){
 
-        this.app.use(this.usuariosPath, require('../routes/user'));
+        this.app.use(this.pokemonsPath, require('../routes/pokemon')); 
 
     }
 
