@@ -6,10 +6,8 @@ class Server {
     constructor(){
         this.app = express();
         this.port = process.env.PORT;
+        //this.port = 3000;
         this.pokemonsPath = '/api';
-
-        //Conectar a Base de datos Mongo
-        //this.conectarDB();
 
         //Middlewares
         this.middleWares();
