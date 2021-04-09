@@ -24,6 +24,7 @@ const getPokemonsPaginated = async( req, res ) => {
         
         const spritesArray = await addDrawings(results, parsedOffset);
     
+        console.log("Si jala");
         res.json({
             spritesArray,
             next
