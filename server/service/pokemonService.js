@@ -1,5 +1,7 @@
 var Pokedex = require('pokedex-promise-v2');
 
+const { POKEMON_OFFICIAL_DRAW_URL, POKEMON_OFFICIAL_DRAW_URL_LESS10, POKEMON_OFFICIAL_DRAW_URL_LESS100, PNG_FORMAT } = require('../constants/constants')
+
 var P = new Pokedex();
 
 const addDrawings = ( pokedex, offset ) => {
@@ -13,11 +15,11 @@ const addDrawings = ( pokedex, offset ) => {
                 let pokemonNumber = (index + offset + 1)
 
                 if (index + offset < 9) {
-                    return pokemon.draw = process.env.POKEMON_OFFICIAL_DRAW_URL_LESS10 + (pokemonNumber) + process.env.PNG_FORMAT  
+                    return pokemon.draw = POKEMON_OFFICIAL_DRAW_URL_LESS10 + (pokemonNumber) + PNG_FORMAT  
                 } else if (index + offset < 99) {
-                    return pokemon.draw = process.env.POKEMON_OFFICIAL_DRAW_URL_LESS100 + (pokemonNumber) + process.env.PNG_FORMAT
+                    return pokemon.draw = POKEMON_OFFICIAL_DRAW_URL_LESS100 + (pokemonNumber) + PNG_FORMAT
                 } else {
-                    return pokemon.draw = process.env.POKEMON_OFFICIAL_DRAW_URL + (pokemonNumber) + process.env.PNG_FORMAT
+                    return pokemon.draw = POKEMON_OFFICIAL_DRAW_URL + (pokemonNumber) + PNG_FORMAT
                 }
                 
             });

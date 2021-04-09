@@ -162,6 +162,16 @@ const typesColours = [
     }
 ]
 
+const POKEMON_OFFICIAL_DRAW_URL_LESS10 = "https://assets.pokemon.com/assets/cms2/img/pokedex/full/00"
+const POKEMON_OFFICIAL_DRAW_URL_LESS100 = "https://assets.pokemon.com/assets/cms2/img/pokedex/full/0"
+const POKEMON_OFFICIAL_DRAW_URL = "https://assets.pokemon.com/assets/cms2/img/pokedex/full/"
+const PNG_FORMAT = ".png"
+
+
 module.exports = {
-    typesColours
+    typesColours,
+    POKEMON_OFFICIAL_DRAW_URL,
+    POKEMON_OFFICIAL_DRAW_URL_LESS10,
+    POKEMON_OFFICIAL_DRAW_URL_LESS100,
+    PNG_FORMAT
 }
