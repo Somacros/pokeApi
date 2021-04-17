@@ -8,6 +8,8 @@ const addDrawings = ( pokedex, offset ) => {
     return new Promise(async( resolve, reject ) => {
         
         try {
+
+            console.log("Añade Draws");
             
             pokedex.forEach((pokemon, index, array) => {
                 pokemon.name = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
@@ -23,6 +25,8 @@ const addDrawings = ( pokedex, offset ) => {
                 }
                 
             });
+
+            console.log("Termina de añadir Draws");
             
             resolve(pokedex);
         } catch (error) {
@@ -37,7 +41,7 @@ const addDrawings = ( pokedex, offset ) => {
 const addTypes = ( pokedex ) => {
     return new Promise( async( resolve, reject ) => {
 
-        const pokedexWithTypes =  pokedex.map( async( pokemon, index ) => {
+        const pokedexWithTypes = await pokedex.map( async( pokemon, index ) => {
             const pokemonData = await P.getPokemonByName(pokemon.name);
             const { types, ...rest } = pokemonData
     

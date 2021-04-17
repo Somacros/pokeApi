@@ -24,7 +24,7 @@ const getPokemonsPaginated = async( req, res ) => {
         
         const spritesArray = await addDrawings(results, parsedOffset);
     
-        console.log("Si jala");
+        console.log("Justo antes de regresar");
         res.json({
             spritesArray,
             next
@@ -57,7 +57,27 @@ const getSimplePokedex = async(req, res) => {
 
 }
 
+const getPokemonTypesByName = async( req, res ) => {
+
+    let { pokemon = 'bulbasaur', ...restQuery } = req.query;
+
+    pokemon = pokemon.toLowerCase();
+
+    try{
+        const pokemonTypes = await P.getPokemonByName(pokemon)
+        const { types, ...rest } = pokemonTypes;
+    
+        res.json(types)
+    } catch( error ){
+        console.log(error);
+        res.status(404).json(error);
+    }
+   
+    
+}
+
 module.exports = {
     getSimplePokedex,
-    getPokemonsPaginated
+    getPokemonsPaginated,
+    getPokemonTypesByName
 }
