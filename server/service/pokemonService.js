@@ -36,17 +36,19 @@ const addDrawings = ( pokedex, offset ) => {
 
 const addTypes = ( pokedex ) => {
     return new Promise( async( resolve, reject ) => {
-
-        const pokedexWithTypes =  pokedex.map( async( pokemon, index ) => {
-            const pokemonData = await P.getPokemonByName(pokemon.name);
-            const { types, ...rest } = pokemonData
-    
-            pokemon.types = types;
-    
-            return pokemon
-        })
-
-        resolve(pokedexWithTypes);
+        try {
+            var pokedexWithTypes = [];
+            for (const pokemon of pokedex) {
+                const pokemonData = await P.getPokemonByName(pokemon.name.toLowerCase());
+                const { types, ...rest } = pokemonData
+        
+                pokemon.types = types;
+                pokedexWithTypes.push(pokemon);
+            }
+            resolve(pokedexWithTypes);
+        } catch (error) {
+            reject('Error en addTypes',error)
+        }
 
     });
 }

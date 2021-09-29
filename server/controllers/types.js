@@ -7,12 +7,12 @@ const getAllTypesWithColors = async(req, res) => {
     try{
 
         const {results, count, ...rest} = await P.getTypesList();
-    
-        console.log(`${ count } TYPES GOT SUCCESFUL`);
+        let typesMap = {};
 
         results.forEach((type, index, array) => {
             if( index <= typesColours.length -1 ) {
                 type.colours = typesColours[index].colours;
+                typesMap[type.name] = type
             } else {
                 res.status(500).json({
                     error: "1",
@@ -21,7 +21,7 @@ const getAllTypesWithColors = async(req, res) => {
             }
         });
     
-        res.json(results)
+        res.json(typesMap);
 
     } catch(err) {
         console.log(err);
