@@ -1,7 +1,7 @@
 const {response} = require('express');
 var Pokedex = require('pokedex-promise-v2');
 
-const { addDrawings } = require('../service/pokemonService')
+const { addDrawings, addTypes } = require('../service/pokemonService')
 
 var P = new Pokedex();
 
@@ -22,9 +22,8 @@ const getPokemonsPaginated = async( req, res ) => {
         
         const { results, next, ...rest } = pokedexPage;
         
-        const spritesArray = await addDrawings(results, parsedOffset);
-    
-        console.log("Si jala");
+        let pokemonDraws = await addDrawings(results, parsedOffset);
+        let spritesArray = await addTypes(pokemonDraws);
         res.json({
             spritesArray,
             next
@@ -32,7 +31,7 @@ const getPokemonsPaginated = async( req, res ) => {
 
     } catch (error) {
         console.log(error);
-        res.status(500).json(error);
+        res.status(500).json({error: true, msg: error});
     }
 
 }
