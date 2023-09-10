@@ -1,7 +1,7 @@
 const {response} = require('express');
 var Pokedex = require('pokedex-promise-v2');
 
-const { addDrawings, addTypes } = require('../service/pokemonService')
+const { createPokemonObjectsByNamesArray } = require('../service/pokemonService')
 
 var P = new Pokedex();
 
@@ -22,11 +22,11 @@ const getPokemonsPaginated = async( req, res ) => {
         
         const { results, next, ...rest } = pokedexPage;
         
-        let pokemonDraws = await addDrawings(results, parsedOffset);
-        let spritesArray = await addTypes(pokemonDraws);
+        let spritesArray = await createPokemonObjectsByNamesArray(results, parsedOffset);
+
         res.json({
+            next,
             spritesArray,
-            next
         }); 
 
     } catch (error) {
@@ -40,7 +40,7 @@ const getSimplePokedex = async(req, res) => {
 
     try {
         
-        const pokedex = await P.getPokemonList();
+        const pokedex = await P.getPokemonsList();
         
         const { results, ...rest } = pokedex;
 
@@ -56,7 +56,32 @@ const getSimplePokedex = async(req, res) => {
 
 }
 
+const getPokemonByName = async(req, res) => {
+
+    const { name } = req.query;
+    if(name && name.length >= 3) {
+        try {
+            const {results, ...rest} = await P.getPokemonSpeciesList();
+    
+            const filteredPokemon = results.filter(pokemon => {
+                return pokemon.name.includes(name);
+            });
+    
+            const pokedexWithFormat = await createPokemonObjectsByNamesArray(filteredPokemon, 0);
+            
+            res.json({spritesArray: pokedexWithFormat});
+    
+        } catch (error) {
+            res.status(500).json(error);
+            throw new Error(error);
+        }
+    } else {
+        res.status(400).json('Please provide at least 3 characters.');
+    }
+}
+
 module.exports = {
     getSimplePokedex,
-    getPokemonsPaginated
+    getPokemonsPaginated,
+    getPokemonByName,
 }
