@@ -48,7 +48,9 @@ const createPokemonObjectsByNamesArray = (pokedex, offset) => {
         try {
             var pokedexWithTypes = [];
             for (const pokemon of pokedex) {
-                const pokemonData = await P.getPokemonByName(pokemon.name.toLowerCase());
+                const formattedPokemonName = pokemon.name.toLowerCase();
+                const pokemonData = await P.getPokemonByName(formattedPokemonName);
+
                 const {
                     types,
                     ...rest
@@ -63,7 +65,6 @@ const createPokemonObjectsByNamesArray = (pokedex, offset) => {
             resolve(pokedexWithTypesAndDrawings);
         } catch (error) {
             reject('Error en createPokemonObjectsByNamesArray:', error);
-            throw new Error(error);
         }
 
     });
