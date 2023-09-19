@@ -4,7 +4,7 @@ const {
 var Pokedex = require('pokedex-promise-v2');
 
 const {
-    createPokemonObjectsByNamesArray
+    createPokemonObjectsByNamesArray, getPokemonEvolutionChain, getAllPokemonInfo, getFullPokemonInformation
 } = require('../service/pokemonService');
 
 const options = {
@@ -118,10 +118,48 @@ const getPokemonByName = async (req, res) => {
     } else {
         res.status(400).json('Please provide at least 3 characters.');
     }
+};
+
+const getPokemonEvolveChain = async(req, res) => {
+    const { pokemonName } = req.query
+    if(pokemonName) {
+        try {
+            const info = await getAllPokemonInfo(pokemonName);
+            const { evolution_chain, ...rest } = info;
+
+            const evolutionChain = await getPokemonEvolutionChain(evolution_chain.url);
+
+            res.status(200).json({evolutionChain});
+        } catch (error) {
+            console.log('ERROR:', error);
+            res.status(400).json('Error while fetching data:', error);
+        }
+    } else {
+        res.status(400).json('Please provide a valid pokemon name');
+    }
+};
+
+const getAllPokemonInformation = async(req, res) => {
+    const { pokemonName } = req.query;
+
+    const pokemonData = await getAllPokemonInfo(pokemonName);
+
+    res.status(200).json({pokemonData});
+}
+
+const getFullInformation = async(req, res) => {
+    const { pokemonName } = req.query;
+
+    const pokemonData = await getFullPokemonInformation(pokemonName);
+
+    res.status(200).json({pokemonData});
 }
 
 module.exports = {
     getSimplePokedex,
     getPokemonsPaginated,
     getPokemonByName,
+    getPokemonEvolveChain,
+    getAllPokemonInformation,
+    getFullInformation,
 }
