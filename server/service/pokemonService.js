@@ -114,9 +114,12 @@ const getFullPokemonInformation = async (pokemonName) => {
 
             const fullInfo = await P.getPokemonByName(pokemonName);
 
+            const flavor_text_entries = getFlavorText(basicInfo.flavor_text_entries);
+
             const allInformation = Object.assign({}, basicInfo, fullInfo, {
                 evolution_chain: evolution_chain_final,
-                draw: pokemon_draw
+                draw: pokemon_draw,
+                flavor_text_entries,
             });
 
             resolve(allInformation);
@@ -172,6 +175,14 @@ const getPokemonDrawing = (pokemonNumber) => {
     } else {
         return POKEMON_OFFICIAL_DRAW_URL + (pokemonNumber) + PNG_FORMAT
     }
+};
+
+const getFlavorText = (flavorTextArray) => {
+    const englishFlavorTexts = flavorTextArray.filter(flavor => {
+        return flavor.language.name == 'en';
+    });
+
+    return englishFlavorTexts;
 };
 
 module.exports = {
