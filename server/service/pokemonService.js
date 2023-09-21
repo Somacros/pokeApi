@@ -66,12 +66,16 @@ const createPokemonObjectsByNamesArray = (pokedex, offset) => {
 
 const getAllPokemonInfo = async (pokemonName) => {
     return new Promise(async (resolve, reject) => {
-        try {
-            const data = await P.getPokemonSpeciesByName(pokemonName);
+        if (pokemonName) {
+            try {
+                const data = await P.getPokemonSpeciesByName(pokemonName);
 
-            resolve(data);
-        } catch (error) {
-            reject(error);
+                resolve(data);
+            } catch (error) {
+                reject(error);
+            }
+        } else {
+            reject('Please provide a valid PokemonName. PokemonName provided:', pokemonName);
         }
     })
 };
@@ -84,9 +88,12 @@ const getPokemonEvolutionChain = async (pokemonEvolutionChainURL) => {
             if (match.length) {
                 const evolutionChainID = match[1];
                 const evolutionData = await P.getEvolutionChainById(evolutionChainID);
-                const evolutionChain = getEvolutionsArray(evolutionData.chain, evolutionData.chain.species).reverse();
-
-                resolve(evolutionChain);
+                if(evolutionData && evolutionData.chain && evolutionData.chain.evolves_to.length) {
+                    const evolutionChain = getEvolutionsArray(evolutionData.chain, evolutionData.chain.species).reverse();
+                    resolve(evolutionChain);
+                } else {
+                    resolve([]);
+                }
             }
 
         } catch (error) {
