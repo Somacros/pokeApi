@@ -6,7 +6,6 @@ class Server {
     constructor(){
         this.app = express();
         this.port = process.env.PORT || 8081;
-        //this.port = 3000;
         this.pokemonsPath = '/api';
 
         //Middlewares
@@ -36,6 +35,7 @@ class Server {
     routes(){
 
         this.app.use(this.pokemonsPath, require('../routes/pokemon')); 
+        this.app.use(this.pokemonsPath, require('../routes/news'));
 
     }
 
