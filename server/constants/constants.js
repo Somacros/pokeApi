@@ -159,12 +159,20 @@ const typesColours = [
             secondary: "#707070",
             fontColor: "#fff"
         }
+    },
+    {
+        name: "stellar",
+        colours:{ 
+            primary: "#fff",
+            secondary: "#fff",
+            fontColor: "#212121"
+        }
     }
 ]
 
-const POKEMON_OFFICIAL_DRAW_URL_LESS10 = "https://assets.pokemon.com/assets/cms2/img/pokedex/full/00"
-const POKEMON_OFFICIAL_DRAW_URL_LESS100 = "https://assets.pokemon.com/assets/cms2/img/pokedex/full/0"
-const POKEMON_OFFICIAL_DRAW_URL = "https://assets.pokemon.com/assets/cms2/img/pokedex/full/"
+const POKEMON_OFFICIAL_DRAW_URL_LESS10 = "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/00"
+const POKEMON_OFFICIAL_DRAW_URL_LESS100 = "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/0"
+const POKEMON_OFFICIAL_DRAW_URL = "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/"
 const PNG_FORMAT = ".png"
 
 

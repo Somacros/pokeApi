@@ -9,6 +9,13 @@ const getAllTypesWithColors = async(req, res) => {
         const {results, count, ...rest} = await P.getTypesList();
         let typesMap = {};
 
+        if( results.length !== typesColours.length ) {
+            res.status(500).json({
+                error: "1",
+                msg:`There's a mismatch between the number of types in the API and the number of colours assigned.`
+            });
+        }
+
         results.forEach((type, index, array) => {
             if( index <= typesColours.length -1 ) {
                 type.colours = typesColours[index].colours;
